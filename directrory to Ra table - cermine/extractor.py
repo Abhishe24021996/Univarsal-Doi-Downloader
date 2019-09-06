@@ -44,15 +44,15 @@ def extraction(directory):
     except: abst = ''
     try: 
         titl = list(map(str,tree.xpath('//title-group/article-title/text()')))
-        titl = ' :::: '.join(titl)
+        titl = ' '.join(titl)
     except: titl='' 
     try: 
         auth = list(map(str,tree.xpath('//contrib-group/contrib[@contrib-type="author"]/string-name/text()')))
-        auth=' :::: '.join(auth)
+        auth=' , '.join(auth)
     except: auth =''
     try: 
         affl = list(map(str,tree.xpath('//aff/institution/text()')))
-        affl = ' :::: '.join(affl)
+        affl = ' '.join(affl)
     except: affl=''
     mate=''
     try:
