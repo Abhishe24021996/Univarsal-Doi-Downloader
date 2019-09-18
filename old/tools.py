@@ -10,6 +10,7 @@ nltk.download('averaged_perceptron_tagger')
 from nltk.corpus import stopwords
 from nltk.stem.porter import PorterStemmer
 from string import punctuation
+from nltk.stem import PorterStemmer 
 ps = PorterStemmer()
 
 f=open('stemmeshfinal.txt','r',encoding='utf8')
@@ -31,23 +32,29 @@ def tokenise(material):
 def regsub_clean(lisli):
     li=[]
     for word in lisli:
-        word=re.sub('^[¢»®™•°/’!"#$%&\€Ÿ\'()*+,-./:;<=>?@[\]^_`{|}~\“\”]+','',word)
-        word=re.sub('[¢»®™•°/’!"#$%&\€Ÿ\'()*+,-./:;<=>?@[\]^_`{|}~\“\”]+$','',word)
+        word=re.sub('^[¢»®™•°/’!"#$%&\€Ÿ\'()*+,-./:;<=>?@[\]^_`{|}~\“\”]+',' ',word)
+        word=re.sub('[¢»®™•°/’!"#$%&\€Ÿ\'()*+,-./:;<=>?@[\]^_`{|}~\“\”]+$',' ',word)
         #word=re.sub('^[¢»®™•°/’!"#$%&\\'()*+,-./:;<=>?@[\]^_`{|}~\“\”]{1,6}[0-9]+$','',word)
-        word=re.sub('^[¢»®™•°/’!"#$%&\\'()*+,-./:;<=>?@[\]^_`{|}~\“\”0-9]+$','',word)
-        word=re.sub('^[0-9]{4,8}?.+','',word) 
-        if re.search('^[0-9]+$',word):
+        word=re.sub('^[¢»®™•°/’!"#$%&\\'()*+,-./:;<=>?@[\]^_`{|}~\“\”0-9]+$',' ',word)
+        #word=re.sub('^[0-9]{4,8}?.+','',word) 
+        if re.search('^[0-9x./]+[a-z]?[a-z]?',word):
             continue 
         elif word == '':
-        	continue
-        elif re.search('m[mlin]{0,3}/[cmlin]+',word):
+            continue
+        elif re.search('m[mlin]{0,3}/[cmlin]+|fig',word):
             continue
         elif re.search('^[μ]',word):
-            continue              
+            continue  
+        elif re.search('[~°]',word):
+            continue
+        elif re.search('[\.-/_]{2,}',word):
+            continue
         elif (len(word)<=2):
             continue
         elif (len(word)>45):
             continue
+        elif len(word)<=5 and re.search('^.[-/_\.].[-/_\.].$|^.[-/_\.].$',word):
+            continue  
         li.append(word)        
     lis = [ word for word in li if not word in remwords]
     return lis
@@ -71,7 +78,7 @@ def spac(listli):
     return new
     
 
-def rem_af_spac(lisli): #lemm function is present in 
+def rem_af_spac(lisli):
     li=[]
     for word in lisli:
         word=re.sub('^[¢»®™•°/’!"#$%&\€Ÿ\'()*+,-./:;<=>?@[\]^_`{|}~\“\”]+','',word)
@@ -91,7 +98,7 @@ def rem_af_spac(lisli): #lemm function is present in
         elif (len(word)>45):
             continue
         li.append(word) 
-    words = lemm(li)
-    wojoi = ' '.join(words)
+    #words = lemm(li)
+    wojoi = ' '.join(li).strip()
     return wojoi
                       
