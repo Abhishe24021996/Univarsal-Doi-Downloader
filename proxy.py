@@ -49,20 +49,6 @@ def download_pdf(link,j):
         print("deleted")
         return flag
     
-    
 
-# =============================================================================
-# class Directory:
-#     def _init_(self,j):
-#         self.j=j
-#         
-#     def make_directory(self):
-#         dire = "pyf"+self.j
-#         os.mkdir(dire)
-#         return Directory.dire
-#     def remove_directory(self):
-#         dire = "pyf"+self.j
-#         shutil.remove("./"+ dire)
-# =============================================================================
     
             

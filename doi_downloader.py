@@ -9,23 +9,28 @@ import mysql.connector
 import glob
 import shutil
 
+from configparser import ConfigParser
+config = ConfigParser()
+config.read('config.ini')
+host = config.get('main', 'host')
+user = config.get('main', 'user')
+password = config.get('main', 'password')
+db = config.get('main', 'db')
+
 ###Inserting new row in RA
 def insert_RA(doi,titl,auth,abst,materi,affl,mate):
-    db = mysql.connector.connect(host='profeza1.cmiovtxwqa3q.ap-south-1.rds.amazonaws.com',  # your host name is often 'localhost'
-                     user='root',            
-                     passwd='profeza123',  
-                     db='smart_sales_app')
-    cur=db.cursor()
-    query = "INSERT INTO research_article(research_article_doi,research_article_title,research_article_authors,research_article_abstract,research_article_keywords,research_article_affliations,research_material_section) VALUES (%s,%s,%s,%s,%s,%s,%s);"
-    try: 
-        cur.execute(query,(doi,titl,auth,abst,materi,affl,mate))
-        db.commit()
-        db.close()
-    except Exception as e:
-        print(e) 
-    finally:
-        cur.close()
-        db.close() 
+    db = mysql.connector.connect(host=host,  # your host name is often 'localhost'
+                     user=user,            
+                     passwd=password,  
+                     db=db,
+                     autocommit=True)
+    with db.cursor() as cur:
+	    query = "INSERT INTO research_article(research_article_doi,research_article_title,research_article_authors,research_article_abstract,research_article_keywords,research_article_affliations,research_material_section) VALUES (%s,%s,%s,%s,%s,%s,%s);"
+	    try: 
+	        cur.execute(query,(doi,titl,auth,abst,materi,affl,mate))
+	    except Exception as e:
+	        print(e) 
+    
         
         
 
