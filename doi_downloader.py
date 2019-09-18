@@ -36,7 +36,7 @@ def insert_RA(doi,titl,auth,abst,materi,affl,mate):
 
 ####Read the input file contining the doi's in correct form:::i/p--van.txt
 file_list_of_dois = sys.argv[0]
-with open("van.txt","r") as f: 
+with open(file_list_of_dois,"r") as f: 
 	listi=f.read()
 doi_list = listi.split()
 
